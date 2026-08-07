@@ -9,7 +9,7 @@ function Settings() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/admin/profile', {
+                const response = await fetch('https://eventsphere-95n2.onrender.com/api/admin/profile', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
@@ -65,8 +65,8 @@ function Settings() {
                             </p>
                         </div>
 
-                        <div style={{ 
-                            borderTop: '1px solid var(--border-color)', 
+                        <div style={{
+                            borderTop: '1px solid var(--border-color)',
                             paddingTop: '2rem',
                             color: 'var(--text-muted)',
                             textAlign: 'center',
