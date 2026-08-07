@@ -63,7 +63,7 @@ function VerifyTicket() {
         setVerificationStatus(null);
 
         try {
-            const response = await fetch('http://localhost:5000/api/tickets/verify', {
+            const response = await fetch('https://eventsphere-95n2.onrender.com/api/tickets/verify', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
