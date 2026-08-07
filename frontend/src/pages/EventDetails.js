@@ -22,7 +22,7 @@ function EventDetails() {
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
             }
-            const response = await fetch(`https://eventsphere-95n2.onrender.com/api/events/${id}`, { headers });
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/events/${id}`, { headers });
             const data = await response.json();
             setEvent(data);
         } catch (error) {
