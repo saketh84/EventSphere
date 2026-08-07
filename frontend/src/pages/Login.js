@@ -18,7 +18,7 @@ function Login() {
             const trimmedEmail = email.trim().toLowerCase();
             const trimmedPassword = password.trim();
 
-            const response = await fetch('http://localhost:5000/api/auth/login', {
+            const response = await fetch('https://eventsphere-95n2.onrender.com/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ function Login() {
             localStorage.setItem("token", data.token);
             localStorage.setItem("userName", data.user?.name || '');
             localStorage.setItem("userEmail", data.user?.email || '');
-            localStorage.setItem("role", data.user?.role || 'student'); 
+            localStorage.setItem("role", data.user?.role || 'student');
             localStorage.setItem("userId", data.user?.id || '');
 
             console.log("Login successful, redirecting to browse...");
@@ -75,16 +75,16 @@ function Login() {
                 <p style={{ marginTop: '-12px' }}>
                     Sign in to EventSphere to discover and register for events.
                 </p>
-                
+
                 {error && (
-                    <div style={{ 
-                        background: 'rgba(239, 68, 68, 0.1)', 
-                        border: '1px solid rgba(239, 68, 68, 0.3)', 
-                        color: '#f87171', 
-                        padding: '12px', 
-                        borderRadius: '10px', 
-                        fontSize: '0.85rem', 
-                        textAlign: 'center' 
+                    <div style={{
+                        background: 'rgba(239, 68, 68, 0.1)',
+                        border: '1px solid rgba(239, 68, 68, 0.3)',
+                        color: '#f87171',
+                        padding: '12px',
+                        borderRadius: '10px',
+                        fontSize: '0.85rem',
+                        textAlign: 'center'
                     }}>
                         {error}
                     </div>
@@ -105,7 +105,7 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    
+
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-4px' }}>
                         <span className="link-text" style={{ fontSize: '0.8rem' }} onClick={() => alert('🔑 Reset link password placeholder')}>
                             Forgot Password?
@@ -116,7 +116,7 @@ function Login() {
                         {loading ? 'Signing in...' : 'Sign In'}
                     </button>
                 </form>
-                
+
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
                     <p className="link-text" onClick={() => navigate('/signup')}>
                         Don't have an account? Sign up
