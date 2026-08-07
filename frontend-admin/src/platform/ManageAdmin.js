@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AdminSidebar from "../components/AdminSidebar";
 import "../styles/ManageAdmin.css";
 
-const API = "${process.env.REACT_APP_API_URL}/api/superadmin";
+const API = `${process.env.REACT_APP_API_URL}/api/superadmin`;
 
 const ManageAdmin = () => {
     const [admins, setAdmins] = useState([]);
