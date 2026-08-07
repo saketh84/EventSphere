@@ -21,7 +21,7 @@ function TicketDetails() {
     const fetchTicket = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`https://eventsphere-95n2.onrender.com/api/tickets/${regId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tickets/${regId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
