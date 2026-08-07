@@ -26,7 +26,7 @@ function MyRegistrations() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                "http://localhost:5000/api/tickets/my-registrations",
+                "https://eventsphere-95n2.onrender.com/api/tickets/my-registrations",
                 {
                     method: "GET",
                     headers: {
@@ -55,9 +55,9 @@ function MyRegistrations() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/tickets/${regId}/cancel`, {
+            const response = await fetch(`https://eventsphere-95n2.onrender.com/api/tickets/${regId}/cancel`, {
                 method: 'DELETE',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
@@ -102,14 +102,14 @@ function MyRegistrations() {
 
                 {/* Tabs bar */}
                 <div className="registrations-tabs">
-                    <button 
-                        className={activeTab === 'upcoming' ? 'active' : ''} 
+                    <button
+                        className={activeTab === 'upcoming' ? 'active' : ''}
                         onClick={() => setActiveTab('upcoming')}
                     >
                         Upcoming Events
                     </button>
-                    <button 
-                        className={activeTab === 'past' ? 'active' : ''} 
+                    <button
+                        className={activeTab === 'past' ? 'active' : ''}
                         onClick={() => setActiveTab('past')}
                     >
                         Past Events
@@ -150,7 +150,7 @@ function MyRegistrations() {
                                     <div className="registration-info">
                                         <div className="registration-header">
                                             <h3>{event.title}</h3>
-                                           
+
                                         </div>
                                         <div className="registration-details">
                                             <span><Calendar size={14} /> {formattedDate}</span>
@@ -158,16 +158,16 @@ function MyRegistrations() {
                                             <span><Ticket size={14} /> Pass ID: {reg.reg_id}</span>
                                         </div>
                                         <div className="registration-actions">
-                                            <button 
-                                                className="action-btn view" 
+                                            <button
+                                                className="action-btn view"
                                                 onClick={() => navigate(`/ticket/${reg.reg_id}`)}
                                             >
                                                 <Eye size={14} />
                                                 <span>View Ticket Pass</span>
                                             </button>
                                             {!isPast && (
-                                                <button 
-                                                    className="action-btn cancel" 
+                                                <button
+                                                    className="action-btn cancel"
                                                     onClick={() => cancelRegistration(reg.reg_id, event.title)}
                                                 >
                                                     <Trash2 size={14} />
