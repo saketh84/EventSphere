@@ -90,7 +90,7 @@ function AdminDashboard() {
 
         try {
             const response = await fetch(
-                "https://eventsphere-95n2.onrender.com/api/events/manage",
+                "${process.env.REACT_APP_API_URL}/api/events/manage",
                 {
                     method: "POST",
                     headers: {
