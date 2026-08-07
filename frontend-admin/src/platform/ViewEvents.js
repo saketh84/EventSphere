@@ -10,7 +10,7 @@ const ViewEvents = () => {
         const fetchEvents = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const response = await fetch("https://eventsphere-95n2.onrender.com/api/superadmin/events", {
+                const response = await fetch("${process.env.REACT_APP_API_URL}/api/superadmin/events", {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
