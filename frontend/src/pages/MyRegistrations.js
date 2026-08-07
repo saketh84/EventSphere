@@ -26,7 +26,7 @@ function MyRegistrations() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                "${process.env.REACT_APP_API_URL}/api/tickets/my-registrations",
+                `${process.env.REACT_APP_API_URL}/api/tickets/my-registrations`,
                 {
                     method: "GET",
                     headers: {
