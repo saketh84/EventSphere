@@ -1,167 +1,168 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { QRCodeCanvas } from 'qrcode.react';
+import { Download, Calendar, MapPin, User, Mail, Phone, CheckCircle, ArrowRight } from 'lucide-react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import Loader from '../components/Loader';
 
-function Signup() {
+function TicketDetails() {
+    const { regId } = useParams();
     const navigate = useNavigate();
+    const [ticket, setTicket] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const [form, setForm] = useState({
-        name: '',
-        email: '',
-        collegeId: '',
-        phone: '',
-        password: '',
-    });
+    useEffect(() => {
+        fetchTicket();
+    }, [regId]);
 
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
-
-    const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
-
-        // Frontend validations
-        if (form.phone.trim().length !== 10 || !/^\d+$/.test(form.phone.trim())) {
-            setError('❌ Phone number must be exactly 10 digits');
-            return;
-        }
-
-        setLoading(true);
-
+    const fetchTicket = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/signup`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: form.name.trim(),
-                    email: form.email.trim().toLowerCase(),
-                    password: form.password,
-                    role: 'student',
-                    collegeId: form.collegeId.trim(),
-                }),
+            const token = localStorage.getItem('token');
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tickets/${regId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             });
-
             const data = await response.json();
-            if (!response.ok) {
-                setError(data.error || data.message || 'Signup failed');
-                return;
-            }
-
-            if (!data.token) {
-                setError('Signup succeeded but no token received. Please log in.');
-                navigate('/login');
-                return;
-            }
-
-            // Save JWT and user info
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("role", data.user?.role || 'student');
-            localStorage.setItem("userId", data.user?.id || '');
-            localStorage.setItem("userName", data.user?.name || '');
-            localStorage.setItem("userEmail", data.user?.email || '');
-
-            // Redirect
-            navigate("/browse");
-        } catch (err) {
-            console.error('Signup error:', err);
-            setError('Unable to connect to server. Please try again.');
+            setTicket(data);
+        } catch (error) {
+            console.error('Error fetching ticket:', error);
         } finally {
             setLoading(false);
         }
     };
 
+    const downloadTicket = () => {
+        const ticketElement = document.getElementById('ticket-card');
+        // temporarily hide borders or shadows if needed, html2canvas handles it well
+        html2canvas(ticketElement, {
+            scale: 2,
+            backgroundColor: '#ffffff',
+            useCORS: true
+        }).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            // center the ticket in pdf
+            pdf.addImage(imgData, 'PNG', 20, 20, 170, 130);
+            pdf.save(`EventSphere-Ticket-${ticket?.event?.title || 'Ticket'}-${regId}.pdf`);
+        });
+    };
+
+    if (loading) return <Loader />;
+    if (!ticket) return <div className="not-found" style={{ padding: '100px', textAlign: 'center' }}>Ticket not found</div>;
+
+    const event = ticket.event;
+    const isVerified = ticket.verified;
+
+    const formattedDate = new Date(event?.date).toLocaleString("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
     return (
-        <div className="login-bg">
-            <div className="glass-card" style={{ maxWidth: '480px' }}>
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '4px' }}>
-                    <svg className="logo-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '40px', height: '40px' }}>
-                        <circle cx="12" cy="12" r="10" />
-                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                        <path d="M2 12h20" />
-                    </svg>
+        <div className="ticket-page">
+            <Navbar />
+
+            <div className="ticket-container">
+                {/* Success Message */}
+                <div className="ticket-success-header">
+                    <CheckCircle size={56} style={{ color: 'var(--success)' }} />
+                    <h1>Registration Confirmed!</h1>
+                    <p>You have secured your seat. Your digital entry ticket pass is generated below.</p>
                 </div>
-                <h2>Create Account</h2>
-                <p style={{ marginTop: '-12px' }}>
-                    Join EventSphere to register and manage tickets.
-                </p>
 
-                {error && (
-                    <div style={{
-                        background: 'rgba(239, 68, 68, 0.1)',
-                        border: '1px solid rgba(239, 68, 68, 0.3)',
-                        color: '#f87171',
-                        padding: '12px',
-                        borderRadius: '10px',
-                        fontSize: '0.85rem',
-                        textAlign: 'center'
-                    }}>
-                        {error}
+                {/* Digital Ticket Pass */}
+                <div className="ticket-card" id="ticket-card">
+                    <div className="ticket-header">
+                        <div className="ticket-brand">EventSphere</div>
+                        <div className="ticket-type">ENTRY PASS</div>
                     </div>
-                )}
 
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Full name"
-                        value={form.name}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email address"
-                        value={form.email}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="collegeId"
-                        placeholder="College ID / Company ID"
-                        value={form.collegeId}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="tel"
-                        name="phone"
-                        placeholder="Phone number (10 digits)"
-                        value={form.phone}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password (min 6 chars)"
-                        value={form.password}
-                        onChange={handleChange}
-                        required
-                        minLength={6}
-                    />
+                    <div className="ticket-body">
+                        <div className="ticket-left">
+                            <div>
+                                <span style={{ fontSize: '0.75rem', fontWeight: '700', textTransform: 'uppercase', color: 'var(--primary)', letterSpacing: '1px' }}>
+                                    {event?.category || 'General'}
+                                </span>
+                                <h2>{event?.title}</h2>
+                                <div className="ticket-details">
+                                    <div className="detail-row">
+                                        <Calendar size={14} />
+                                        <span>{formattedDate}</span>
+                                    </div>
+                                    <div className="detail-row">
+                                        <MapPin size={14} />
+                                        <span>{event?.venue}</span>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div className="attendee-info">
+                                <h4>Attendee Details</h4>
+                                <div className="detail-row">
+                                    <User size={12} />
+                                    <span>{ticket.studentName}</span>
+                                </div>
+                                <div className="detail-row">
+                                    <Mail size={12} />
+                                    <span>{ticket.studentEmail}</span>
+                                </div>
+                                <div className="detail-row">
+                                    <Phone size={12} />
+                                    <span>ID: {ticket.collegeId || 'N/A'}</span>
+                                </div>
+                            </div>
+                        </div>
 
-                    <button type="submit" disabled={loading}>
-                        {loading ? 'Creating account...' : 'Create Account'}
+                        <div className="ticket-right">
+                            <div className="qr-code">
+                                <QRCodeCanvas value={regId} size={110} level="H" />
+                                <span className="ticket-id-tag">ID: {regId}</span>
+                            </div>
+                            <div className={`verification-status ${isVerified ? 'verified' : 'pending'}`}>
+                                {isVerified ? '✓ Verified' : '⏳ Pending'}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="ticket-footer">
+                        <p>Show this QR code entry pass at the venue check-in gate. ID proof might be requested.</p>
+                    </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="ticket-actions">
+                    <button className="download-btn" onClick={downloadTicket}>
+                        <Download size={18} />
+                        <span>Download Ticket PDF</span>
                     </button>
-                </form>
+                    <button className="browse-btn" onClick={() => navigate('/my-registrations')}>
+                        <span>View My Registrations</span>
+                        <ArrowRight size={16} style={{ marginLeft: '4px', verticalAlign: 'middle' }} />
+                    </button>
+                </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
-                    <p className="link-text" onClick={() => navigate('/login')}>
-                        Already have an account? Sign in
-                    </p>
-                    <Link to="/" className="link-text" style={{ fontSize: '0.85rem' }}>
-                        Back to Home
-                    </Link>
+                {/* Extra info box */}
+                <div className="event-info-box">
+                    <h3>Event Information</h3>
+                    <div className="info-grid">
+                        <div><strong>Organizer:</strong> {event?.organizer || 'Event Coordinator'}</div>
+                        <div><strong>Capacity limit:</strong> {event?.capacity || 100} seats total</div>
+                        <div><strong>Support email:</strong> support@eventsphere.com</div>
+                        <div><strong>Venue details:</strong> {event?.venue}</div>
+                    </div>
                 </div>
             </div>
+
+            <Footer />
         </div>
     );
 }
 
-export default Signup;
+export default TicketDetails;
