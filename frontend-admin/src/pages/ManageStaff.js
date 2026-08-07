@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import AdminSidebar from "../components/AdminSidebar";
 import "../styles/dashboard.css";
 
-const API = ${process.env.REACT_APP_API_URL};
+const API = process.env.REACT_APP_API_URL;
 
 function ManageStaff() {
   const token = localStorage.getItem("token");
