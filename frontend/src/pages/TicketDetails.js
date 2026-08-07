@@ -21,7 +21,7 @@ function TicketDetails() {
     const fetchTicket = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/tickets/${regId}`, {
+            const response = await fetch(`https://eventsphere-95n2.onrender.com/api/tickets/${regId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -38,8 +38,8 @@ function TicketDetails() {
     const downloadTicket = () => {
         const ticketElement = document.getElementById('ticket-card');
         // temporarily hide borders or shadows if needed, html2canvas handles it well
-        html2canvas(ticketElement, { 
-            scale: 2, 
+        html2canvas(ticketElement, {
+            scale: 2,
             backgroundColor: '#ffffff',
             useCORS: true
         }).then((canvas) => {
@@ -102,7 +102,7 @@ function TicketDetails() {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div className="attendee-info">
                                 <h4>Attendee Details</h4>
                                 <div className="detail-row">
