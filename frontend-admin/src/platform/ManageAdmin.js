@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AdminSidebar from "../components/AdminSidebar";
 import "../styles/ManageAdmin.css";
 
-const API = "http://localhost:5000/api/superadmin";
+const API = "https://eventsphere-95n2.onrender.com/api/superadmin";
 
 const ManageAdmin = () => {
     const [admins, setAdmins] = useState([]);
