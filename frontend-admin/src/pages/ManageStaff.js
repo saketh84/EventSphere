@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import AdminSidebar from "../components/AdminSidebar";
 import "../styles/dashboard.css";
 
-const API = "https://eventsphere-95n2.onrender.com";
+const API = ${process.env.REACT_APP_API_URL};
 
 function ManageStaff() {
   const token = localStorage.getItem("token");
