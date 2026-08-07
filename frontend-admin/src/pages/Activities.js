@@ -30,7 +30,7 @@ function Activities() {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const response = await fetch(${process.env.REACT_APP_API_URL}/api/users/volunteers, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/users/volunteers`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -100,7 +100,7 @@ function Activities() {
             const { confirmPassword, ...registrationData } = formData;
 
             // Volunteers are stored in the Admin model, so use /api/admin/register
-            const response = await fetch('${process.env.REACT_APP_API_URL}/api/admin/register', {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
