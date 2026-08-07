@@ -18,7 +18,7 @@ function Login() {
             const trimmedEmail = email.trim().toLowerCase();
             const trimmedPassword = password.trim();
 
-            const response = await fetch('https://eventsphere-95n2.onrender.com/api/auth/login', {
+            const response = await fetch('${process.env.REACT_APP_API_URL}/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
