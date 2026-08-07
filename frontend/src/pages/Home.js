@@ -11,7 +11,7 @@ function Home() {
     const [featuredEvents, setFeaturedEvents] = useState([]);
     const [upcomingEvents, setUpcomingEvents] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+
     // Search fields
     const [nameSearch, setNameSearch] = useState('');
     const [locationSearch, setLocationSearch] = useState('');
@@ -35,7 +35,7 @@ function Home() {
     const fetchHomeData = async () => {
         try {
             // Fetch featured events
-            const featuredRes = await fetch('http://localhost:5000/api/events/featured');
+            const featuredRes = await fetch('https://eventsphere-95n2.onrender.com/api/events/featured');
             const featuredData = await featuredRes.json();
             const featuredArray = Array.isArray(featuredData)
                 ? featuredData
@@ -43,12 +43,12 @@ function Home() {
             setFeaturedEvents(featuredArray.slice(0, 6));
 
             // Fetch all events and sort by date for upcoming
-            const allRes = await fetch('http://localhost:5000/api/events/all');
+            const allRes = await fetch('https://eventsphere-95n2.onrender.comapi/events/all');
             const allData = await allRes.json();
             const allArray = Array.isArray(allData)
                 ? allData
                 : allData.events || allData.data || [];
-            
+
             // Filter out past events, sort ascending
             const today = new Date();
             const upcoming = allArray
@@ -76,12 +76,12 @@ function Home() {
 
             {/* Hero Section */}
             <section className="hero-section">
-                <div 
-                    className="hero-bg-overlay" 
+                <div
+                    className="hero-bg-overlay"
                     style={{ backgroundImage: `url(${heroImage})` }}
                 ></div>
                 <div className="hero-gradient"></div>
-                
+
                 <div className="container">
                     <div className="hero-content">
                         <div className="hero-badge">
@@ -101,8 +101,8 @@ function Home() {
                             <form className="hero-search-form" onSubmit={handleSearch}>
                                 <div className="search-field">
                                     <Search size={18} />
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         placeholder="Event name or keyword..."
                                         value={nameSearch}
                                         onChange={(e) => setNameSearch(e.target.value)}
@@ -110,8 +110,8 @@ function Home() {
                                 </div>
                                 <div className="search-field">
                                     <MapPin size={18} />
-                                    <input 
-                                        type="text" 
+                                    <input
+                                        type="text"
                                         placeholder="City or venue location..."
                                         value={locationSearch}
                                         onChange={(e) => setLocationSearch(e.target.value)}
@@ -119,8 +119,8 @@ function Home() {
                                 </div>
                                 <div className="search-field">
                                     <Tag size={18} />
-                                    <select 
-                                        value={categorySearch} 
+                                    <select
+                                        value={categorySearch}
                                         onChange={(e) => setCategorySearch(e.target.value)}
                                     >
                                         <option value="All">All Categories</option>
@@ -148,9 +148,9 @@ function Home() {
                             <p className="section-desc">Find conferences, workshops, or sports matches matching your vibe.</p>
                         </div>
                     </div>
-                    
+
                     <div className="categories-list">
-                        <button 
+                        <button
                             className={`category-pill ${categorySearch === 'All' ? 'active' : ''}`}
                             onClick={() => {
                                 setCategorySearch('All');
