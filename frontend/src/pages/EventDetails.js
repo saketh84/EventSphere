@@ -22,7 +22,7 @@ function EventDetails() {
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
             }
-            const response = await fetch(`http://localhost:5000/api/events/${id}`, { headers });
+            const response = await fetch(`https://eventsphere-95n2.onrender.com/api/events/${id}`, { headers });
             const data = await response.json();
             setEvent(data);
         } catch (error) {
@@ -51,11 +51,11 @@ function EventDetails() {
 
     const seatsLeft = (event.capacity || 100) - (event.registrationCount || 0);
     const isSoldOut = seatsLeft <= 0;
-    
+
     // Dynamic Registration Deadline (24 hours before event)
     const eventDate = new Date(event.date);
     const deadlineDate = new Date(eventDate.getTime() - 24 * 60 * 60 * 1000);
-    
+
     const formattedDate = eventDate.toLocaleString("en-IN", {
         day: "numeric",
         month: "long",
@@ -175,7 +175,7 @@ function EventDetails() {
                             <div className="price-tag">
                                 {event.price === 0 || event.price === '0' ? 'FREE' : `₹${event.price}`}
                             </div>
-                            
+
                             <div className="seats-info">
                                 <Users size={18} />
                                 <span>{seatsLeft} Seats Available</span>
@@ -194,7 +194,7 @@ function EventDetails() {
                             >
                                 {isSoldOut ? 'Sold Out' : 'Register Now'}
                             </button>
-                            
+
                             <button className="share-btn" onClick={handleShare}>
                                 <Share2 size={16} />
                                 <span>Share Event</span>
