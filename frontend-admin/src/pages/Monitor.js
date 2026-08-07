@@ -47,7 +47,7 @@ function Monitor() {
     const fetchEvents = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch("${process.env.REACT_APP_API_URL}/api/events/monitor", {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/events/monitor`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
