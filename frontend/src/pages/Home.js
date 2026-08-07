@@ -43,7 +43,7 @@ function Home() {
             setFeaturedEvents(featuredArray.slice(0, 6));
 
             // Fetch all events and sort by date for upcoming
-            const allRes = await fetch('https://eventsphere-95n2.onrender.comapi/events/all');
+            const allRes = await fetch('${process.env.REACT_APP_API_URL}/api/events/all');
             const allData = await allRes.json();
             const allArray = Array.isArray(allData)
                 ? allData
