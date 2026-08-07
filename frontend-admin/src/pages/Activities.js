@@ -30,7 +30,7 @@ function Activities() {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const response = await fetch('${process.env.REACT_APP_API_URL}/api/users/volunteers', {
+            const response = await fetch(${process.env.REACT_APP_API_URL}/api/users/volunteers, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
