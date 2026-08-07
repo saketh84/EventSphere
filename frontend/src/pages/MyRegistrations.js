@@ -26,7 +26,7 @@ function MyRegistrations() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                "https://eventsphere-95n2.onrender.com/api/tickets/my-registrations",
+                "${process.env.REACT_APP_API_URL}/api/tickets/my-registrations",
                 {
                     method: "GET",
                     headers: {
@@ -55,7 +55,7 @@ function MyRegistrations() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`https://eventsphere-95n2.onrender.com/api/tickets/${regId}/cancel`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/tickets/${regId}/cancel`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
