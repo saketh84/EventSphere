@@ -47,7 +47,7 @@ function Monitor() {
     const fetchEvents = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch("https://eventsphere-95n2.onrender.com/api/events/monitor", {
+            const res = await fetch("${process.env.REACT_APP_API_URL}/api/events/monitor", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -114,7 +114,7 @@ function Monitor() {
 
                 const res =
                     await fetch(
-                        `https://eventsphere-95n2.onrender.com/api/events/${id}`,
+                        `${process.env.REACT_APP_API_URL}/api/events/${id}`,
                         {
                             method:
                                 "DELETE",
@@ -206,7 +206,7 @@ function Monitor() {
 
         try {
             const token = localStorage.getItem("token");
-            await fetch(`https://eventsphere-95n2.onrender.com/api/events/notify/${id}`, {
+            await fetch(`${process.env.REACT_APP_API_URL}/api/events/notify/${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -229,7 +229,7 @@ function Monitor() {
 
             const res =
                 await fetch(
-                    `https://eventsphere-95n2.onrender.com/api/events/${id}/registrations`,
+                    `${process.env.REACT_APP_API_URL}/api/events/${id}/registrations`,
                     {
                         method: "GET",
 
@@ -338,7 +338,7 @@ function Monitor() {
 
                 const res =
                     await fetch(
-                        `https://eventsphere-95n2.onrender.com/api/events/${editingId}`,
+                        `${process.env.REACT_APP_API_URL}/api/events/${editingId}`,
                         {
                             method:
                                 "PUT",
