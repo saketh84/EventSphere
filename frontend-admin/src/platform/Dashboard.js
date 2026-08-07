@@ -21,7 +21,7 @@ const Dashboard = () => {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                "https://eventsphere-95n2.onrender.com/api/admin/dashboard",
+                "${process.env.REACT_APP_API_URL}/api/admin/dashboard",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
