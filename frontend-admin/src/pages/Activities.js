@@ -30,7 +30,7 @@ function Activities() {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/users/volunteers', {
+            const response = await fetch('https://eventsphere-95n2.onrender.com/api/users/volunteers', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
