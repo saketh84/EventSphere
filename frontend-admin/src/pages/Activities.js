@@ -30,7 +30,7 @@ function Activities() {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const response = await fetch('https://eventsphere-95n2.onrender.com/api/users/volunteers', {
+            const response = await fetch('${process.env.REACT_APP_API_URL}/api/users/volunteers', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -100,7 +100,7 @@ function Activities() {
             const { confirmPassword, ...registrationData } = formData;
 
             // Volunteers are stored in the Admin model, so use /api/admin/register
-            const response = await fetch('https://eventsphere-95n2.onrender.com/api/admin/register', {
+            const response = await fetch('${process.env.REACT_APP_API_URL}/api/admin/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ function Activities() {
 
         try {
             // Volunteers are in the Admin model — delete via /api/admin/:id
-            const response = await fetch(`https://eventsphere-95n2.onrender.com/api/admin/${userId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/admin/${userId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
