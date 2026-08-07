@@ -1,0 +1,590 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* --- REFINED COLOR PALETTE --- */
+    --bg-dark: #020617;
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --primary-indigo: #6366f1;
+    --primary-purple: #5d55f7;
+    
+    /* --- DESIGN TOKENS --- */
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
+    --glass-blur: blur(16px) saturate(180%);
+    --transition-apple: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* --- 1. CORE RESET & BACKGROUND --- */
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Animated Spatial Blobs */
+body::before, body::after {
+    content: ""; position: fixed; width: 50vw; height: 50vw;
+    border-radius: 50%; z-index: -1; opacity: 0.12;
+    pointer-events: none; animation: floatBlobs 25s infinite alternate;
+}
+body::before { top: -10%; right: -5%; background: var(--primary-indigo); }
+body::after { bottom: -10%; left: -5%; background: var(--primary-purple); animation-delay: -12s; }
+
+@keyframes floatBlobs {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(10%, 15%) scale(1.15); }
+}
+
+/* --- 2. LAYOUT --- */
+.admin-page-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-main-content {
+    flex: 1;
+    padding: 60px;
+    transition: var(--transition-apple);
+}
+
+/* --- 3. HAMBURGER & SIDEBAR --- */
+.hamburger-trigger {
+    position: fixed; top: 25px; left: 25px; z-index: 999;
+    cursor: pointer; display: flex; flex-direction: column; gap: 5px;
+    padding: 12px; background: var(--glass-bg);
+    border-radius: 12px; border: 1px solid var(--glass-border);
+    transition: 0.3s;
+}
+
+.hamburger-trigger:hover { background: rgba(255,255,255,0.1); }
+
+.hamburger-trigger .bar {
+    width: 22px; height: 2px; background: #fff; border-radius: 2px;
+}
+
+.admin-sidebar-panel {
+    position: fixed; top: 0; left: -320px;
+    width: 300px; height: 100vh;
+    background: rgba(2, 6, 23, 0.95);
+    backdrop-filter: var(--glass-blur);
+    border-right: 1px solid var(--glass-border);
+    z-index: 2000; display: flex; flex-direction: column;
+    padding: 40px 25px;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-sidebar-panel.active {
+    transform: translateX(320px); /* Hardware accelerated slide */
+}
+
+/* Header & X Mark */
+.sidebar-header {
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+.close-x-mark {
+    font-size: 32px; color: var(--text-dim); cursor: pointer;
+    transition: 0.3s; line-height: 0.5;
+}
+
+.close-x-mark:hover { color: #fff; transform: rotate(90deg); }
+
+/* Navigation Links */
+.sidebar-nav-links {
+    margin-top: 50px; display: flex; flex-direction: column; gap: 8px;
+}
+
+.sidebar-nav-links a {
+    text-decoration: none; color: var(--text-dim);
+    padding: 14px 18px; border-radius: 14px;
+    font-weight: 500; transition: var(--transition-apple);
+}
+
+.sidebar-nav-links a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff; transform: translateX(8px);
+}
+
+/* --- 4. FORMS & TABLES (Glassmorphism) --- */
+.event-form, .manage-events {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    padding: 35px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow-premium);
+}
+
+.event-form input, .event-form select, .event-form textarea {
+    width: 100%; margin-bottom: 15px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px; padding: 14px;
+    color: #fff; transition: var(--transition-apple);
+}
+
+.event-form input:focus {
+    border-color: var(--primary-indigo);
+    background: rgba(15, 23, 42, 0.8);
+    outline: none;
+}
+
+.event-form button {
+    width: 100%; padding: 16px; border-radius: 16px; border: none;
+    background: linear-gradient(135deg, var(--primary-indigo), var(--primary-purple));
+    color: #fff; font-weight: 700; cursor: pointer;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    transition: var(--transition-apple);
+}
+
+.event-form button:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+/* --- 5. UI COMPONENTS --- */
+.admin-table { width: 100%; border-collapse: collapse; }
+
+.admin-table th {
+    text-align: left; padding: 20px; color: var(--text-dim);
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+}
+
+.admin-table td { padding: 20px; border-top: 1px solid var(--glass-border); color: #fff; }
+
+.badge {
+    padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
+}
+
+.badge-technical { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+.badge-sports { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+.logout-btn-modern {
+    margin-top: auto; padding: 14px; border-radius: 14px;
+    background: rgba(239, 68, 68, 0.1); color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2); cursor: pointer;
+    font-weight: 600; transition: 0.3s;
+}
+
+.logout-btn-modern:hover { background: #ef4444; color: #fff; }
+
+/* Overlay */
+.sidebar-blur-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px); z-index: 1500;
+}
+
+/* Animation Reveal */
+.reveal { opacity: 0; transform: translateY(20px); transition: var(--transition-apple); }
+.reveal.active { opacity: 1; transform: translateY(0); }
+.view-btn{
+    background: linear-gradient(135deg, var(--primary-indigo), var(--primary-purple));
+    color: white; padding: 8px 14px; border: none; border-radius: 12px;
+    font-weight: 600; cursor: pointer;
+}
+.delete-btn-modern{
+    background: rgba(239, 68, 68, 0.1); color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2); cursor: pointer;
+    font-weight: 600; transition: 0.3s; padding: 8px 14px; border-radius: 12px;
+}
+.count-indicator{
+    background: rgba(99, 102, 241, 0.1); color: #6366f1;
+    padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600;
+}
+/* --- 1. AUTHENTICATION (Login & Register) --- */
+.auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-form {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: 40px;
+    border-radius: 28px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.auth-form h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #fff, var(--text-dim));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- 2. ADMIN SIDEBAR & NAVIGATION --- */
+.admin-sidebar {
+    width: 260px;
+    background: rgba(2, 6, 23, 0.6);
+    backdrop-filter: var(--glass-blur);
+    border-right: 1px solid var(--glass-border);
+    padding: 30px 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-nav {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar-nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: var(--transition-apple);
+}
+
+.sidebar-nav a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    transform: translateX(5px);
+}
+
+/* --- 3. EVENTS GRID & CARDS --- */
+.main-content {
+    flex: 1;
+    padding: 40px 60px;
+    transition: var(--transition-apple);
+}
+
+.main-content.shift {
+    margin-left: 50px; /* Slight shift when sidebar interacts */
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.event-card {
+    background: var(--card-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: var(--transition-apple);
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.event-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.event-info {
+    padding: 20px;
+}
+
+/* --- 4. CATEGORY TAGS & BUTTONS --- */
+.category-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.tag-technical { background: rgba(99, 102, 241, 0.2); color: #818cf8; }
+.tag-cultural { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+.tag-sports { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+.view-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-indigo), var(--primary-purple));
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: var(--transition-apple);
+}
+
+.view-btn:hover {
+    filter: brightness(1.1);
+    transform: scale(1.02);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Darkens the background and blurs the content behind the modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Dark semi-transparent overlay */
+    backdrop-filter: blur(8px); /* Modern blur effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensures it stays above all other elements */
+    padding: 20px;
+}
+
+/* The actual white/glass card containing the form */
+.modal-content {
+    width: 100%;
+    max-width: 550px;
+    max-height: 90vh; /* Prevents the modal from being taller than the screen */
+    overflow-y: auto; /* Adds scrollbar if content is too long */
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    animation: modalFadeIn 0.3s ease-out; /* Smooth entrance animation */
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Consistent styling for all inputs inside the edit form */
+.modal-field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #f8f9fa;
+    transition: border-color 0.3s ease;
+}
+
+.modal-field:focus {
+    outline: none;
+    border-color: #4a90e2; /* Highlight color on focus */
+    background: #fff;
+}
+
+/* Specific styling for the description area */
+textarea.modal-field {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Label for the file upload section */
+.modal-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+    font-size: 0.9rem;
+}
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Save Changes Button */
+.form-actions button[type="submit"] {
+    flex: 2;
+    background: #28a745; /* Success green */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-actions button[type="submit"]:hover {
+    background: #218838;
+}
+
+/* Cancel Button */
+.form-actions button[type="button"] {
+    flex: 1;
+    background: #6c757d; /* Neutral gray */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-actions button[type="button"]:hover {
+    background: #5a6268;
+}
+/* --- TABS CONTAINER --- */
+.tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 35px;
+    padding: 6px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    width: fit-content; /* Keeps the tab bar from stretching full width */
+}
+
+/* --- BASE TAB BUTTON --- */
+.tab, .active-tab {
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-apple);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Inactive Tab Style */
+.tab {
+    background: transparent;
+    color: var(--text-dim);
+}
+
+.tab:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* --- ACTIVE TAB STYLE --- */
+.active-tab {
+    background: linear-gradient(135deg, var(--primary-indigo), var(--primary-purple));
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    position: relative;
+    transform: scale(1.02);
+}
+
+/* Optional: Add a small glowing dot to the active tab */
+.active-tab::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    margin-left: 8px;
+    box-shadow: 0 0 10px #fff;
+}
+
+/* --- RESPONSIVENESS --- */
+@media (max-width: 600px) {
+    .tabs {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .tab, .active-tab {
+        flex: 1;
+        font-size: 0.8rem;
+        padding: 10px 12px;
+    }
+}
+.delete-btn-modern {
+    background: rgba(239, 68, 68, 0.1); /* Subtle transparent red */
+    color: var(--danger-red);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition-apple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.delete-btn-modern:hover {
+    background: var(--danger-red);
+    color: white;
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Optional: Pulse effect for a "Danger" feel when active */
+.delete-btn-modern:active {
+    transform: scale(0.95);
+}
+.view-btn {
+    width: auto; /* Changed from 100% to fit content */
+    padding: 8px 16px; /* Reduced padding from 12px */
+    background: linear-gradient(135deg, var(--primary-indigo), var(--primary-purple));
+    color: white;
+    border-radius: 10px; /* Slightly tighter radius for smaller size */
+    border: none;
+    font-size: 0.85rem; /* Reduced font size */
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0; /* Removed large top margin for better alignment */
+    transition: var(--transition-apple);
+}
+
+.view-btn:hover {
+    filter: brightness(1.1);
+    transform: scale(1.05); /* Slightly more pop since it's smaller */
+}
+.delete-btn-modern {
+    background: rgba(199, 10, 10, 0.431);
+    color: var(--danger-red);
+    border: 1px solid rgba(192, 8, 8, 0.403);
+    padding: 8px 16px; /* Matches the new view-btn padding */
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition-apple);
+}
+
+.delete-btn-modern:hover {
+    background: var(--danger-red);
+    color: white;
+    transform: translateY(-2px);
+}
+/* Add this to your CSS to align the smaller buttons side-by-side */
+.admin-table td:last-child {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}

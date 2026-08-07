@@ -1,0 +1,61 @@
+.org-page {
+
+    padding: 30px;
+    background: #f5f7fb;
+    min-height: 100vh;
+
+}
+
+.org-page h1 {
+
+    margin-bottom: 25px;
+    color: #222;
+
+}
+
+.search-box {
+
+    width: 350px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    font-size: 15px;
+
+}
+
+.org-card {
+
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+
+}
+
+.org-card h2 {
+
+    color: #2563eb;
+    margin-bottom: 10px;
+
+}
+
+.org-card h3 {
+
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+}
+
+.org-card ul {
+
+    padding-left: 20px;
+
+}
+
+.org-card li {
+
+    margin-bottom: 8px;
+
+}
