@@ -63,18 +63,21 @@ function VerifyTicket() {
         setVerificationStatus(null);
 
         try {
-            const response = await fetch('${process.env.REACT_APP_API_URL}/api/tickets/verify', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    qrCodeId: ticketId.trim().toUpperCase(),
-                    verifiedBy: adminName,
-                    verifiedAt: new Date().toISOString()
-                })
-            });
+            const response = await fetch(
+    `${process.env.REACT_APP_API_URL}/api/tickets/verify`,
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+            qrCodeId: ticketId.trim().toUpperCase(),
+            verifiedBy: adminName,
+            verifiedAt: new Date().toISOString()
+        })
+    }
+);
 
             const data = await response.json();
             setVerificationStatus(data);
