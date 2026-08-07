@@ -52,7 +52,7 @@ function Profile() {
         setSaving(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/auth/profile/update', {
+            const response = await fetch('https://eventsphere-95n2.onrender.com/api/auth/profile/update', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
