@@ -9,7 +9,7 @@ function Settings() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await fetch('https://eventsphere-95n2.onrender.com/api/admin/profile', {
+                const response = await fetch('${process.env.REACT_APP_API_URL}/api/admin/profile', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
