@@ -18,7 +18,7 @@ function Monitor() {
     const [selectedUser, setSelectedUser] = useState(null);
     const [showUserModal, setShowUserModal] = useState(false);
     const [filterStatus, setFilterStatus] = useState('all');
-    
+
     const [form, setForm] =
         useState({
 
@@ -47,7 +47,7 @@ function Monitor() {
     const fetchEvents = async () => {
         try {
             const token = localStorage.getItem("token");
-            const res = await fetch("http://localhost:5000/api/events/monitor", {
+            const res = await fetch("https://eventsphere-95n2.onrender.com/api/events/monitor", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -114,7 +114,7 @@ function Monitor() {
 
                 const res =
                     await fetch(
-                        `http://localhost:5000/api/events/${id}`,
+                        `https://eventsphere-95n2.onrender.com/api/events/${id}`,
                         {
                             method:
                                 "DELETE",
@@ -206,7 +206,7 @@ function Monitor() {
 
         try {
             const token = localStorage.getItem("token");
-            await fetch(`http://localhost:5000/api/events/notify/${id}`, {
+            await fetch(`https://eventsphere-95n2.onrender.com/api/events/notify/${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -229,7 +229,7 @@ function Monitor() {
 
             const res =
                 await fetch(
-                    `http://localhost:5000/api/events/${id}/registrations`,
+                    `https://eventsphere-95n2.onrender.com/api/events/${id}/registrations`,
                     {
                         method: "GET",
 
@@ -338,7 +338,7 @@ function Monitor() {
 
                 const res =
                     await fetch(
-                        `http://localhost:5000/api/events/${editingId}`,
+                        `https://eventsphere-95n2.onrender.com/api/events/${editingId}`,
                         {
                             method:
                                 "PUT",
@@ -530,8 +530,8 @@ function Monitor() {
                                 >
                                     All ({registrations.length})
                                 </button>
-                               
-                              
+
+
                             </div>
                         </div>
 
@@ -549,7 +549,7 @@ function Monitor() {
                                             <th>User</th>
                                             <th>Contact Info</th>
                                             <th>Registered On</th>
-                                            
+
 
                                         </tr>
                                     </thead>
@@ -585,7 +585,7 @@ function Monitor() {
                                                         <span>{new Date(reg.createdAt).toLocaleDateString()}</span>
                                                     </div>
                                                 </td>
-                                               
+
                                                 <td>
                                                     <div className="action-buttons">
 
