@@ -27,7 +27,7 @@ function Profile() {
             return;
         }
         try {
-            const response = await fetch('https://eventsphere-95n2.onrender.com/api/auth/profile', {
+            const response = await fetch('${process.env.REACT_APP_API_URL}/api/auth/profile', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.status === 401) {
@@ -52,7 +52,7 @@ function Profile() {
         setSaving(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('https://eventsphere-95n2.onrender.com/api/auth/profile/update', {
+            const response = await fetch('${process.env.REACT_APP_API_URL}/api/auth/profile/update', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
