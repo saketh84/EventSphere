@@ -11,7 +11,7 @@ function BrowseEvents() {
     const [events, setEvents] = useState([]);
     const [filteredEvents, setFilteredEvents] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+
     // Filters state
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
@@ -36,7 +36,7 @@ function BrowseEvents() {
 
     const fetchEvents = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/events/all');
+            const response = await fetch('https://eventsphere-95n2.onrender.com/api/events/all');
             const data = await response.json();
 
             const eventsArray = Array.isArray(data)
@@ -72,7 +72,7 @@ function BrowseEvents() {
         // 3. Location filter
         if (selectedLocation) {
             const locationLower = selectedLocation.toLowerCase();
-            filtered = filtered.filter(event => 
+            filtered = filtered.filter(event =>
                 event.venue.toLowerCase().includes(locationLower)
             );
         }
