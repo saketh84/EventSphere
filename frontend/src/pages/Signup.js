@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 function Signup() {
     const navigate = useNavigate();
-    
+
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -11,7 +11,7 @@ function Signup() {
         phone: '',
         password: '',
     });
-    
+
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -32,7 +32,7 @@ function Signup() {
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:5000/api/auth/signup', {
+            const response = await fetch('https://eventsphere-95n2.onrender.com/api/auth/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -89,14 +89,14 @@ function Signup() {
                 </p>
 
                 {error && (
-                    <div style={{ 
-                        background: 'rgba(239, 68, 68, 0.1)', 
-                        border: '1px solid rgba(239, 68, 68, 0.3)', 
-                        color: '#f87171', 
-                        padding: '12px', 
-                        borderRadius: '10px', 
-                        fontSize: '0.85rem', 
-                        textAlign: 'center' 
+                    <div style={{
+                        background: 'rgba(239, 68, 68, 0.1)',
+                        border: '1px solid rgba(239, 68, 68, 0.3)',
+                        color: '#f87171',
+                        padding: '12px',
+                        borderRadius: '10px',
+                        fontSize: '0.85rem',
+                        textAlign: 'center'
                     }}>
                         {error}
                     </div>
